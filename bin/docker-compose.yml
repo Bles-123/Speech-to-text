@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: speechdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+
+  # Self-hosted open-source Whisper (faster-whisper engine). CPU build; see README for GPU.
+  whisper:
+    image: onerahmet/openai-whisper-asr-webservice:latest
+    environment:
+      ASR_MODEL: small          # tiny | base | small | medium | large-v3 (bigger = better Hindi, slower)
+      ASR_ENGINE: faster_whisper
+    ports: ["9000:9000"]
+    volumes: [whispercache:/root/.cache]
+
+volumes:
+  pgdata:
+  whispercache:

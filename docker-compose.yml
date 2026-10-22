@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: speechdb
+      MYSQL_ROOT_PASSWORD: root
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports: ["3306:3306"]
+    volumes: [mysqldata:/var/lib/mysql]
+
+  # Self-hosted open-source Whisper (faster-whisper engine). CPU build; see README for GPU.
+  whisper:
+    image: onerahmet/openai-whisper-asr-webservice:latest
+    environment:
+      ASR_MODEL: small          # tiny | base | small | medium | large-v3 (bigger = better Hindi, slower)
+      ASR_ENGINE: faster_whisper
+    ports: ["9000:9000"]
+    volumes: [whispercache:/root/.cache]
+
+volumes:
+  mysqldata:
+  whispercache:

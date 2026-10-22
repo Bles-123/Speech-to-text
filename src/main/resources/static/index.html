@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bolo – Speech to Text</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Bolo</h1>
+    <p>Speak in Hindi, English, or both. Your words are transcribed as you talk.</p>
+  </header>
+
+  <main class="layout">
+    <section class="recorder" aria-labelledby="rec-h">
+      <h2 id="rec-h">Record</h2>
+
+      <div class="row">
+        <label for="lang">Language</label>
+        <select id="lang">
+          <option value="auto" selected>Auto-detect (Hindi + English)</option>
+          <option value="hi">Hindi</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="row">
+        <label for="title">Title</label>
+        <input id="title" type="text" maxlength="200" placeholder="Optional, e.g. Team standup">
+      </div>
+
+      <div class="controls">
+        <button id="recBtn" class="rec" type="button">Start recording</button>
+        <div class="meter" aria-hidden="true"><span id="level"></span></div>
+      </div>
+      <p id="status" class="status" role="status">Ready</p>
+
+      <div id="live" class="live" lang="hi" aria-live="polite">
+        <span class="placeholder">Your transcript will appear here.</span>
+      </div>
+    </section>
+
+    <section class="history" aria-labelledby="hist-h">
+      <div class="history-head">
+        <h2 id="hist-h">History</h2>
+        <input id="search" type="search" placeholder="Search title or text">
+        <button id="newBtn" type="button" class="secondary">Add note</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Title</th><th>Transcript</th><th>Lang</th><th>Saved</th><th><span class="sr">Actions</span></th></tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p id="empty" class="empty" hidden>No transcriptions yet. Press Start recording and say something.</p>
+
+      <nav class="pager" aria-label="Pagination">
+        <button id="prev" type="button" class="secondary">Previous</button>
+        <span id="pageInfo"></span>
+        <button id="next" type="button" class="secondary">Next</button>
+      </nav>
+    </section>
+  </main>
+
+  <dialog id="dlg">
+    <form id="form" method="dialog">
+      <h3 id="dlgTitle">Edit transcription</h3>
+      <label for="fTitle">Title</label>
+      <input id="fTitle" type="text" maxlength="200" required>
+      <label for="fLang">Language</label>
+      <select id="fLang">
+        <option value="auto">Auto</option><option value="hi">Hindi</option><option value="en">English</option>
+      </select>
+      <label for="fText">Transcript</label>
+      <textarea id="fText" rows="9" lang="hi" required></textarea>
+      <p class="meta" id="fMeta"></p>
+      <div class="dlg-actions">
+        <button type="button" id="cancel" class="secondary">Cancel</button>
+        <button type="submit" id="save" class="primary">Save changes</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
